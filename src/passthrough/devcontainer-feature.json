@@ -1,0 +1,43 @@
+{
+  "name": "Passthrough",
+  "id": "passthrough",
+  "version": "0.0.1",
+  "description": "Prepares the container for desktop passthrough",
+  "options": {
+    "create_user": {
+      "type": "boolean",
+      "default": true,
+      "description": "Create a user with the same name as the host user"
+    }
+  },
+  "installsAfter": ["ghcr.io/devcontainers/features/common-utils"],
+  "entrypoint": "/etc/entrypoint/passthrough/entrypoint.sh",
+  "containerEnv": {
+    "DBUS_SESSION_BUS_ADDRESS": "${localEnv:DBUS_SESSION_BUS_ADDRESS}",
+    "DESKTOP_SESSION": "${localEnv:DESKTOP_SESSION}",
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "SSH_AUTH_SOCK": "${localEnv:SSH_AUTH_SOCK}",
+    "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+    "XAUTHORITY": "${localEnv:XAUTHORITY}",
+    "XDG_CURRENT_DESKTOP": "${localEnv:XDG_CURRENT_DESKTOP}",
+    "XDG_MENU_PREFIX": "${localEnv:XDG_MENU_PREFIX}",
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+    "XDG_SESSION_CLASS": "${localEnv:XDG_SESSION_CLASS}",
+    "XDG_SESSION_DESKTOP": "${localEnv:XDG_SESSION_DESKTOP}",
+    "XDG_SESSION_ID": "${localEnv:XDG_SESSION_ID}",
+    "XDG_SESSION_PATH": "${localEnv:XDG_SESSION_PATH}",
+    "XDG_SESSION_TYPE": "${localEnv:XDG_SESSION_TYPE}"
+  },
+  "mounts": [
+    {
+      "source": "/tmp/.X11-unix",
+      "target": "/tmp/.X11-unix",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:XDG_RUNTIME_DIR}",
+      "target": "${localEnv:XDG_RUNTIME_DIR}",
+      "type": "bind"
+    }
+  ]
+}
